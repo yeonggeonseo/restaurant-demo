@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>The Bob Story — Korean Kitchen · Edmonton</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #9B1C1C;
+    --crimson-light: #B91C1C;
+    --gold: #C9A84C;
+    --gold-pale: #E8D5A3;
+    --ink: #0F0D0A;
+    --charcoal: #1C1916;
+    --ash: #2A2520;
+    --parchment: #F7F3EC;
+    --text-muted: rgba(247,243,236,0.45);
+    --text-secondary: rgba(247,243,236,0.65);
+    --divider: rgba(247,243,236,0.08);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─── */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    transition: background 0.4s, border-color 0.4s;
+    border-bottom: 1px solid transparent;
+  }
+
+  .navbar.scrolled {
+    background: rgba(15,13,10,0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: var(--divider);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  /* Small circle logo in nav */
+  .logo-sm {
+    width: 36px;
+    height: 36px;
+    background: var(--crimson);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-sm-chop {
+    position: absolute;
+    top: 2px; left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+  }
+
+  .logo-sm-chop span {
+    display: block;
+    width: 2px;
+    height: 10px;
+    background: white;
+    border-radius: 1px;
+    opacity: 0.9;
+    transform-origin: bottom center;
+  }
+
+  .logo-sm-chop span:first-child { transform: rotate(-12deg); }
+  .logo-sm-chop span:last-child  { transform: rotate(12deg); }
+
+  .logo-sm-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    line-height: 1;
+  }
+
+  .logo-sm-the   { font-family: 'Montserrat',sans-serif; font-size: 4px; font-weight: 300; letter-spacing: 1px; color: rgba(255,255,255,0.75); text-transform: uppercase; }
+  .logo-sm-bob   { font-family: 'Montserrat',sans-serif; font-size: 11px; font-weight: 700; color: white; letter-spacing: 1px; line-height: 1; }
+  .logo-sm-story { font-family: 'Montserrat',sans-serif; font-size: 4px; font-weight: 300; letter-spacing: 1.5px; color: rgba(255,255,255,0.85); text-transform: uppercase; }
+  .logo-sm-kk    { font-family: 'Montserrat',sans-serif; font-size: 3px; font-weight: 600; letter-spacing: 1px; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-top: 1px; }
+
+  .nav-wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--parchment);
+  }
+
+  .nav-wordmark em { font-style: italic; color: var(--gold); }
+
+  /* Hamburger for mobile */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-links-desktop {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links-desktop a {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links-desktop a:hover { color: var(--gold); }
+
+  .nav-reserve-btn {
+    padding: 8px 18px;
+    border: 1px solid rgba(201,168,76,0.5);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-reserve-btn:hover { background: var(--gold); color: var(--ink); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--parchment);
+    transition: all 0.3s;
+    border-radius: 1px;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Mobile drawer */
+  .mobile-menu {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15,13,10,0.98);
+    z-index: 190;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--parchment);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:hover { color: var(--gold); }
+
+  .mobile-menu .mobile-reserve {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    padding: 14px 40px;
+    background: var(--crimson);
+    color: white;
+    margin-top: 8px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 24px 80px;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(155,28,28,0.18) 0%, transparent 68%), var(--ink);
+    position: relative;
+  }
+
+  /* Large hero logo */
+  .logo-lg {
+    width: 150px;
+    height: 150px;
+    background: var(--crimson);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 0 60px rgba(155,28,28,0.4), 0 0 120px rgba(155,28,28,0.15);
+    animation: glow 4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes glow {
+    0%,100% { box-shadow: 0 0 60px rgba(155,28,28,0.4), 0 0 120px rgba(155,28,28,0.15); }
+    50%      { box-shadow: 0 0 80px rgba(155,28,28,0.6), 0 0 160px rgba(155,28,28,0.25); }
+  }
+
+  .logo-lg-chop {
+    position: absolute;
+    top: 10px; left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .logo-lg-chop span {
+    display: block;
+    width: 5px;
+    height: 40px;
+    background: white;
+    border-radius: 3px;
+    opacity: 0.92;
+    transform-origin: bottom center;
+  }
+
+  .logo-lg-chop span:first-child { transform: rotate(-10deg); }
+  .logo-lg-chop span:last-child  { transform: rotate(10deg); }
+
+  .logo-lg-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 42px;
+    line-height: 1;
+  }
+
+  .logo-lg-the   { font-family: 'Montserrat',sans-serif; font-size: 9px; font-weight: 300; letter-spacing: 2px; color: rgba(255,255,255,0.75); text-transform: uppercase; }
+  .logo-lg-bob   { font-family: 'Montserrat',sans-serif; font-size: 40px; font-weight: 700; color: white; letter-spacing: 2px; line-height: 1; }
+  .logo-lg-story { font-family: 'Montserrat',sans-serif; font-size: 11px; font-weight: 300; letter-spacing: 5px; color: rgba(255,255,255,0.9); text-transform: uppercase; margin-top: 2px; }
+  .logo-lg-kk    { font-family: 'Montserrat',sans-serif; font-size: 7px; font-weight: 600; letter-spacing: 2px; color: rgba(255,255,255,0.55); text-transform: uppercase; margin-top: 4px; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: rgba(201,168,76,0.45);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 15vw, 100px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -1px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-title em { font-style: italic; color: var(--gold); }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 4vw, 18px);
+    font-style: italic;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-top: 16px;
+    padding: 0 8px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .hero-ornament {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 28px auto;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .orn-line { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4)); }
+  .orn-line:last-child { background: linear-gradient(270deg, transparent, rgba(201,168,76,0.4)); }
+  .orn-diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); opacity: 0.55; }
+
+  .hero-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-filled { background: var(--crimson); color: var(--parchment); }
+  .btn-filled:active { background: var(--crimson-light); transform: scale(0.98); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--parchment);
+    border: 1px solid rgba(247,243,236,0.25);
+  }
+  .btn-ghost:active { border-color: var(--gold); color: var(--gold); transform: scale(0.98); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.4), transparent);
+    animation: drip 2s ease-in-out infinite;
+  }
+
+  @keyframes drip {
+    0%,100% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+    50%      { opacity: 0.4; transform: scaleY(0.5); transform-origin: top; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SHARED SECTION ─── */
+  .section-wrap { max-width: 600px; margin: 0 auto; padding: 0 20px; }
+
+  .sec-header { text-align: center; margin-bottom: 44px; }
+
+  .sec-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .sec-tag::before, .sec-tag::after {
+    content: '';
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: rgba(201,168,76,0.4);
+  }
+
+  .sec-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 9vw, 48px);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+
+  .sec-title em { font-style: italic; color: var(--gold); }
+
+  /* ─── MENU ─── */
+  .menu-section {
+    padding: 72px 0;
+    background: var(--charcoal);
+    border-top: 1px solid var(--divider);
+  }
+
+  .menu-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 36px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .menu-tabs::-webkit-scrollbar { display: none; }
+
+  .menu-tab {
+    flex: 1;
+    min-width: 100px;
+    padding: 14px 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menu-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; animation: panelIn 0.25s ease; }
+
+  @keyframes panelIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--divider);
+    transition: padding-left 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menu-item:last-child { border-bottom: none; }
+
+  .item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--parchment);
+    flex: 1;
+    padding-right: 12px;
+  }
+
+  .item-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ─── LOCATION ─── */
+  .location-section {
+    padding: 72px 0;
+    background: var(--ink);
+    border-top: 1px solid var(--divider);
+  }
+
+  .rating-strip {
+    background: var(--crimson);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 2px;
+    flex-wrap: wrap;
+  }
+
+  .rating-left { display: flex; align-items: center; gap: 14px; }
+
+  .rating-score {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 1;
+    color: white;
+  }
+
+  .rating-stars { color: var(--gold-pale); font-size: 13px; letter-spacing: 2px; margin-bottom: 3px; }
+
+  .rating-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .open-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .open-dot {
+    width: 7px;
+    height: 7px;
+    background: #6EE7B7;
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+
+  .info-stack { display: flex; flex-direction: column; gap: 2px; }
+
+  .info-card {
+    background: var(--ash);
+    padding: 28px 20px;
+    border-left: 2px solid transparent;
+    transition: border-color 0.25s;
+  }
+
+  .info-card:active { border-left-color: var(--crimson); }
+
+  .info-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .info-label::after { content: ''; flex: 1; height: 1px; background: var(--divider); }
+
+  .info-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .info-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .arrow-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .arrow-link::after { content: '→'; }
+
+  .hours-table { width: 100%; border-collapse: collapse; }
+  .hours-table tr { border-bottom: 1px solid var(--divider); }
+  .hours-table tr:last-child { border-bottom: none; }
+  .hours-table td { padding: 10px 0; font-size: 13px; font-weight: 300; color: var(--text-secondary); }
+  .hours-table td:last-child { text-align: right; color: var(--parchment); font-weight: 400; }
+
+  .map-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 32px 20px;
+    background: var(--ash);
+    text-decoration: none;
+    border-top: 1px solid var(--divider);
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .map-link:active { background: #26221d; }
+
+  .map-addr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--parchment);
+    letter-spacing: 0.5px;
+  }
+
+  .map-coords {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  .map-cta {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .map-cta::after { content: '↗'; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080706;
+    padding: 48px 20px 36px;
+    text-align: center;
+    border-top: 1px solid var(--divider);
+  }
+
+  .footer-logo-wrap { display: flex; justify-content: center; margin-bottom: 18px; }
+
+  .logo-footer {
+    width: 80px;
+    height: 80px;
+    background: var(--crimson);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(155,28,28,0.3);
+  }
+
+  .logo-footer-chop {
+    position: absolute;
+    top: 7px; left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .logo-footer-chop span {
+    display: block;
+    width: 3px;
+    height: 22px;
+    background: white;
+    border-radius: 2px;
+    opacity: 0.9;
+    transform-origin: bottom center;
+  }
+
+  .logo-footer-chop span:first-child { transform: rotate(-10deg); }
+  .logo-footer-chop span:last-child  { transform: rotate(10deg); }
+
+  .logo-footer-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 26px;
+    line-height: 1;
+  }
+
+  .logo-footer-the   { font-family: 'Montserrat',sans-serif; font-size: 5px; font-weight: 300; letter-spacing: 1.5px; color: rgba(255,255,255,0.7); text-transform: uppercase; }
+  .logo-footer-bob   { font-family: 'Montserrat',sans-serif; font-size: 18px; font-weight: 700; color: white; letter-spacing: 1.5px; line-height: 1; }
+  .logo-footer-story { font-family: 'Montserrat',sans-serif; font-size: 5.5px; font-weight: 300; letter-spacing: 2px; color: rgba(255,255,255,0.85); text-transform: uppercase; }
+  .logo-footer-kk    { font-family: 'Montserrat',sans-serif; font-size: 4px; font-weight: 600; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-top: 2px; }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .footer-brand em { font-style: italic; color: var(--gold); }
+
+  .footer-sub {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+
+  .footer-rule { width: 30px; height: 1px; background: rgba(201,168,76,0.3); margin: 0 auto 24px; }
+
+  .footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .footer-nav a {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .footer-copy { font-size: 10px; color: rgba(247,243,236,0.15); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .nav-links-desktop { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { padding: 90px 20px 70px; }
+
+    .logo-lg { width: 130px; height: 130px; }
+    .logo-lg-bob { font-size: 34px; }
+    .logo-lg-chop span { height: 34px; }
+
+    .btn { font-size: 11px; padding: 15px 24px; }
+
+    .section-wrap { padding: 0 16px; }
+    .menu-section { padding: 60px 0; }
+    .location-section { padding: 60px 0; }
+    .info-card { padding: 24px 16px; }
+
+    .sec-title { font-size: 34px; }
+    .item-name { font-size: 17px; }
+    .item-price { font-size: 17px; }
+  }
+
+  @media (min-width: 601px) {
+    .hamburger { display: none; }
+    .hero-cta { flex-direction: row; width: auto; max-width: none; }
+    .btn { display: inline-block; width: auto; padding: 14px 36px; }
+    .navbar { padding: 18px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="javascript:void(0)" onclick="scrollToSection('menu');closeMenu()">Menu</a>
+  <a href="javascript:void(0)" onclick="scrollToSection('location');closeMenu()">Visit Us</a>
+  <a href="tel:+17804160000" class="mobile-reserve">Reserve a Table</a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="javascript:void(0)" onclick="scrollToSection('home')" class="nav-logo">
+    <div class="logo-sm">
+      <div class="logo-sm-chop"><span></span><span></span></div>
+      <div class="logo-sm-text">
+        <span class="logo-sm-the">The</span>
+        <span class="logo-sm-bob">BOB</span>
+        <span class="logo-sm-story">Story</span>
+        <span class="logo-sm-kk">Korean Kitchen</span>
+      </div>
+    </div>
+    <span class="nav-wordmark">The <em>Bob</em> Story</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links-desktop">
+      <li><a href="javascript:void(0)" onclick="scrollToSection('menu')">Menu</a></li>
+      <li><a href="javascript:void(0)" onclick="scrollToSection('location')">Visit Us</a></li>
+      <li><a href="tel:+17804160000" class="nav-reserve-btn">Reserve</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="logo-lg">
+    <div class="logo-lg-chop"><span></span><span></span></div>
+    <div class="logo-lg-text">
+      <span class="logo-lg-the">The</span>
+      <span class="logo-lg-bob">BOB</span>
+      <span class="logo-lg-story">Story</span>
+      <span class="logo-lg-kk">Korean Kitchen</span>
+    </div>
+  </div>
+  <div class="hero-eyebrow">Korean Kitchen · Edmonton</div>
+  <h1 class="hero-title">The <em>Bob</em><br>Story</h1>
+  <p class="hero-sub">Authentic Korean flavours, crafted with tradition</p>
+  <div class="hero-ornament">
+    <div class="orn-line"></div>
+    <div class="orn-diamond"></div>
+    <div class="orn-line"></div>
+  </div>
+  <div class="hero-cta">
+    <button class="btn btn-filled" onclick="scrollToSection('menu')">Explore Menu</button>
+    <button class="btn btn-ghost" onclick="scrollToSection('location')">Find Us</button>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-wrap">
+    <div class="sec-header">
+      <div class="sec-tag">Our Menu</div>
+      <h2 class="sec-title">Crafted with <em>Tradition</em></h2>
+    </div>
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="switchTab('individual',this)">Individual</button>
+      <button class="menu-tab" onclick="switchTab('noodles',this)">Noodles</button>
+      <button class="menu-tab" onclick="switchTab('deepfried',this)">Deep Fried</button>
+    </div>
+    <div class="menu-panel active" id="tab-individual">
+      <div class="menu-item"><span class="item-name">Chicken Katsu</span><span class="item-price">$15</span></div>
+      <div class="menu-item"><span class="item-name">Pork Katsu</span><span class="item-price">$15</span></div>
+      <div class="menu-item"><span class="item-name">Cheese Katsu</span><span class="item-price">$15</span></div>
+      <div class="menu-item"><span class="item-name">Fish Cake Soup</span><span class="item-price">$20</span></div>
+      <div class="menu-item"><span class="item-name">Clam Soup</span><span class="item-price">$20</span></div>
+      <div class="menu-item"><span class="item-name">Korean Dumpling Soup</span><span class="item-price">$15</span></div>
+      <div class="menu-item"><span class="item-name">Tangsuyuk</span><span class="item-price">$25</span></div>
+      <div class="menu-item"><span class="item-name">Japchae</span><span class="item-price">$15</span></div>
+      <div class="menu-item"><span class="item-name">Tteokbokki</span><span class="item-price">$15</span></div>
+      <div class="menu-item"><span class="item-name">Ttukbaegi Bulgogi</span><span class="item-price">$20</span></div>
+    </div>
+    <div class="menu-panel" id="tab-noodles">
+      <div class="menu-item"><span class="item-name">Bibim Guksu</span><span class="item-price">$15</span></div>
+      <div class="menu-item"><span class="item-name">Jajangmyeon</span><span class="item-price">$15</span></div>
+      <div class="menu-item"><span class="item-name">Ramyeon</span><span class="item-price">$14</span></div>
+    </div>
+    <div class="menu-panel" id="tab-deepfried">
+      <div class="menu-item"><span class="item-name">Korean Fried Chicken</span><span class="item-price">$22</span></div>
+      <div class="menu-item"><span class="item-name">Corn Dog</span><span class="item-price">$8</span></div>
+      <div class="menu-item"><span class="item-name">Twigim Assortment</span><span class="item-price">$16</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section" id="location">
+  <div class="section-wrap">
+    <div class="sec-header">
+      <div class="sec-tag">Find Us</div>
+      <h2 class="sec-title">Visit Our <em>Kitchen</em></h2>
+    </div>
+    <div class="rating-strip">
+      <div class="rating-left">
+        <div class="rating-score">5.0</div>
+        <div>
+          <div class="rating-stars">★★★★★</div>
+          <div class="rating-label">10 Reviews · Google</div>
+        </div>
+      </div>
+      <div class="open-pill"><span class="open-dot"></span>Currently Open</div>
+    </div>
+    <div class="info-stack">
+      <div class="info-card">
+        <div class="info-label">Address</div>
+        <h3>10332 81 Ave NW<br>Edmonton, AB T6E 1X2</h3>
+        <p style="margin-top:8px;">Located in Edmonton's vibrant South Side, steps from Whyte Ave.</p>
+        <a href="https://maps.google.com/?q=10332+81+Ave+NW+Edmonton+AB" target="_blank" class="arrow-link">Get Directions</a>
+      </div>
+
+      <div class="info-card">
+        <div class="info-label">Hours of Operation</div>
+        <table class="hours-table">
+          <tr><td>Monday – Friday</td><td>11:00 am – 9:00 pm</td></tr>
+          <tr><td>Saturday</td><td>12:00 pm – 9:00 pm</td></tr>
+          <tr><td>Sunday</td><td>12:00 pm – 8:00 pm</td></tr>
+        </table>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Contact &amp; Reservations</div>
+        <h3>We'd Love to Hear From You</h3>
+        <p>For reservations, catering enquiries, or any questions — our team is happy to help.</p>
+        <a href="tel:+17804160000" class="arrow-link">Call Us Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo-wrap">
+    <div class="logo-footer">
+      <div class="logo-footer-chop"><span></span><span></span></div>
+      <div class="logo-footer-text">
+        <span class="logo-footer-the">The</span>
+        <span class="logo-footer-bob">BOB</span>
+        <span class="logo-footer-story">Story</span>
+        <span class="logo-footer-kk">Korean Kitchen</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-brand">The <em>Bob</em> Story</div>
+  <div class="footer-sub">Korean Kitchen · Edmonton, Alberta</div>
+  <div class="footer-rule"></div>
+  <ul class="footer-nav">
+    <li><a href="javascript:void(0)" onclick="scrollToSection('menu')">Menu</a></li>
+    <li><a href="javascript:void(0)" onclick="scrollToSection('location')">Location</a></li>
+    <li><a href="tel:+17804160000">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 The Bob Story Korean Kitchen · All Rights Reserved</p>
+</footer>
+
+<script>
+  // Scroll to section by ID
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Menu tabs
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  // Hamburger menu
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const hb = document.getElementById('hamburger');
+    const open = menu.classList.toggle('open');
+    hb.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+</body>
+</html>
